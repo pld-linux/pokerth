@@ -5,15 +5,18 @@ Version:	0.8.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Games
-Source0:	http://dl.sourceforge.net/pokerth/PokerTH-%{version}-src.tar.bz2
+Source0:	http://downloads.sourceforge.net/pokerth/PokerTH-%{version}-src.tar.bz2
 # Source0-md5:	990b2b7dcb48028c0e963161ddea5806
 URL:		http://www.pokerth.net/
 BuildRequires:	QtCore-devel >= 4.3.1
 BuildRequires:	QtGui-devel >= 4.3.1
+BuildRequires:	QtNetwork-devel
+BuildRequires:	QtSql-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	boost-devel >= 1.37.0-3
 BuildRequires:	curl-devel >= 7.16
 BuildRequires:	gnutls-devel
+BuildRequires:	gsasl-devel
 BuildRequires:	qt4-build >= 4.3.1
 BuildRequires:	qt4-qmake >= 4.3.1
 BuildRequires:	zlib-devel >= 1.2.3
