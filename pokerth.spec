@@ -1,12 +1,12 @@
 Summary:	The Open Source Texas-Holdem Poker Engine
 Summary(pl.UTF-8):	Silnik gry Texas-Holdem poker
 Name:		pokerth
-Version:	0.8.1
-Release:	3
+Version:	0.8.3
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Games
 Source0:	http://downloads.sourceforge.net/pokerth/PokerTH-%{version}-src.tar.bz2
-# Source0-md5:	990b2b7dcb48028c0e963161ddea5806
+# Source0-md5:	adbe56ad5f547eb255dad91de564bf1c
 URL:		http://www.pokerth.net/
 BuildRequires:	QtCore-devel >= 4.3.1
 BuildRequires:	QtGui-devel >= 4.3.1
@@ -19,26 +19,33 @@ BuildRequires:	gnutls-devel
 BuildRequires:	gsasl-devel
 BuildRequires:	qt4-build >= 4.3.1
 BuildRequires:	qt4-qmake >= 4.3.1
+BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel >= 1.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-PokerTH is a poker game written in C++/QT4. You can play the popular
+PokerTH is a poker game written in C++/Qt4. You can play the popular
 "Texas Hold'em" poker variant against up to six computer-opponents or
 play network games with people all over the world. This poker engine
-is available for Linux, Windows, and MacOSX.
+is available for Linux, Windows, and MacOS X.
 
 %description -l pl.UTF-8
-PokerTH to komputerowa gra w pokera napisana w C++/QT4. Umożliwia ona
+PokerTH to komputerowa gra w pokera napisana w C++/Qt4. Umożliwia ona
 grę w popularny wariant "Texas Hold'em" przeciwko maksymalnie sześciu
 komputerowym przeciwnikom lub sieciową grę z innymi zawodnikami.
-Silnik gry dostępny jest na platformy Linux, Windows oraz MacOSX.
+Silnik gry dostępny jest na platformy Linux, Windows oraz MacOS X.
 
 %prep
 %setup -q -n PokerTH-%{version}-src
 
+# what is it?
+sed -i -e '/-no_dead_strip_inits_and_terms/d' *.pro
+
 %build
-qmake-qt4 pokerth.pro
+qmake-qt4 pokerth.pro \
+	QMAKE_CXX="%{__cxx}" \
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags} -DBOOST_FILESYSTEM_VERSION=2"
+	QMAKE_LFLAGS_RELEASE="%{rpmldflags}"
 %{__make}
 
 %install
