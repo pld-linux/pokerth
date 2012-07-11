@@ -44,7 +44,7 @@ sed -i -e '/-no_dead_strip_inits_and_terms/d' *.pro
 %build
 qmake-qt4 pokerth.pro \
 	QMAKE_CXX="%{__cxx}" \
-	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags} -DBOOST_FILESYSTEM_VERSION=2"
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}"
 	QMAKE_LFLAGS_RELEASE="%{rpmldflags}"
 %{__make}
 
