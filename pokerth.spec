@@ -20,6 +20,7 @@ BuildRequires:	gsasl-devel
 BuildRequires:	qt4-build >= 4.3.1
 BuildRequires:	qt4-qmake >= 4.3.1
 BuildRequires:	sed >= 4.0
+BuildRequires:	tinyxml-devel
 BuildRequires:	zlib-devel >= 1.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
