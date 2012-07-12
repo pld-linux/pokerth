@@ -7,6 +7,7 @@ License:	GPL v2+
 Group:		X11/Applications/Games
 Source0:	http://downloads.sourceforge.net/pokerth/PokerTH-%{version}-src.tar.bz2
 # Source0-md5:	4bdea98bfc142a825c64b77feb4667d0
+Patch0:		libircclient.patch
 URL:		http://www.pokerth.net/
 BuildRequires:	QtCore-devel >= 4.3.1
 BuildRequires:	QtGui-devel >= 4.3.1
@@ -17,6 +18,7 @@ BuildRequires:	boost-devel >= 1.37.0-3
 BuildRequires:	curl-devel >= 7.16
 BuildRequires:	gnutls-devel
 BuildRequires:	gsasl-devel
+BuildRequires:	libircclient-devel
 BuildRequires:	qt4-build >= 4.3.1
 BuildRequires:	qt4-qmake >= 4.3.1
 BuildRequires:	sed >= 4.0
@@ -38,6 +40,7 @@ Silnik gry dostępny jest na platformy Linux, Windows oraz MacOS X.
 
 %prep
 %setup -q -n PokerTH-%{version}-src
+%patch0 -p1
 
 # what is it?
 sed -i -e '/-no_dead_strip_inits_and_terms/d' *.pro
