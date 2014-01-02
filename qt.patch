@@ -1,0 +1,20 @@
+--- PokerTH-1.1-src/src/gui/qt/chattools/chattools.h~	2013-12-22 17:58:01.000000000 +0100
++++ PokerTH-1.1-src/src/gui/qt/chattools/chattools.h	2014-01-02 17:24:50.229389732 +0100
+@@ -33,7 +33,6 @@
+ 
+ #include <string>
+ #include <QtCore>
+-#include <QtWidgets>
+ #include <QtGui>
+ #include <boost/shared_ptr.hpp>
+ 
+--- PokerTH-1.1-src/src/pokerth.cpp~	2013-12-22 17:58:02.000000000 +0100
++++ PokerTH-1.1-src/src/pokerth.cpp	2014-01-02 17:24:18.539389962 +0100
+@@ -34,7 +34,6 @@
+ #include <ctime>
+ #include <qapplication.h>
+ 
+-#include <QtWidgets>
+ #include <QtGui>
+ #include <QtCore>
+ 
