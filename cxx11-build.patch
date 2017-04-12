@@ -1,0 +1,22 @@
+From 924fcd64044bd17c683345627def83df044ce867 Mon Sep 17 00:00:00 2001
+From: Felix Hammer <f.hammer@web.de>
+Date: Wed, 19 Aug 2015 15:02:10 +0200
+Subject: [PATCH] Linux Desktop build fix
+
+---
+ pokerth_lib.pro | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/pokerth_lib.pro b/pokerth_lib.pro
+index 6ab18b9..e9f1e3a 100644
+--- a/pokerth_lib.pro
++++ b/pokerth_lib.pro
+@@ -256,6 +256,8 @@ win32{
+ 	##### My release static build options
+ 	#QMAKE_CXXFLAGS += -ffunction-sections -fdata-sections
+ 	INCLUDEPATH += $${PREFIX}/include /opt/gsasl/include
++        DEFINES += _WEBSOCKETPP_CPP11_STL_
++        QMAKE_CXXFLAGS += -std=gnu++11
+ }
+ 
+ mac{

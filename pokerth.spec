@@ -2,17 +2,23 @@ Summary:	The Open Source Texas-Holdem Poker Engine
 Summary(pl.UTF-8):	Silnik gry Texas-Holdem poker
 Name:		pokerth
 Version:	1.1.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications/Games
 Source0:	http://downloads.sourceforge.net/pokerth/PokerTH-%{version}-src.tar.bz2
 # Source0-md5:	a7f76f95782099f966e5f2b6809f502a
 Patch0:		x32.patch
 Patch1:		boost-1.60.patch
+Patch2:		ownerless.patch
+Patch3:		cxx11-build.patch
+Patch4:		cxx11-fixes.patch
+Patch5:		system-qtsingleapp.patch
+Patch6:		moc.patch
 URL:		http://www.pokerth.net/
 BuildRequires:	QtCore-devel >= 4.3.1
 BuildRequires:	QtGui-devel >= 4.3.1
 BuildRequires:	QtNetwork-devel
+BuildRequires:	QtSingleApplication-devel
 BuildRequires:	QtSql-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	boost-devel >= 1.37.0-3
@@ -44,6 +50,13 @@ Silnik gry dostępny jest na platformy Linux, Windows oraz MacOS X.
 %setup -q -n PokerTH-%{version}-src
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+
+%{__rm} -r src/third_party/qtsingleapplication
 
 %build
 qmake-qt4 pokerth.pro \

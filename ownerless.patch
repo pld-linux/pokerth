@@ -1,0 +1,32 @@
+From 1d34288a91a94f2156af761586d7efef82b3cf54 Mon Sep 17 00:00:00 2001
+From: lotodore <pokerth@lotharmay.de>
+Date: Tue, 18 Aug 2015 20:49:06 +0200
+Subject: [PATCH] Use owner_less for ordering of connection_hdl (see
+ https://github.com/zaphoyd/websocketpp/issues/457)
+
+---
+ src/net/serveracceptwebhelper.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/net/serveracceptwebhelper.h b/src/net/serveracceptwebhelper.h
+index ea5b926..a1d371e 100644
+--- a/src/net/serveracceptwebhelper.h
++++ b/src/net/serveracceptwebhelper.h
+@@ -37,6 +37,8 @@
+ #include <net/serveracceptinterface.h>
+ #include <net/serverlobbythread.h>
+ 
++#include <boost/smart_ptr/owner_less.hpp>
++
+ class ServerAcceptWebHelper : public ServerAcceptInterface
+ {
+ public:
+@@ -50,7 +52,7 @@ class ServerAcceptWebHelper : public ServerAcceptInterface
+ 
+ protected:
+ 
+-	typedef std::map<websocketpp::connection_hdl, boost::weak_ptr<SessionData> > SessionMap;
++    typedef std::map<websocketpp::connection_hdl, boost::weak_ptr<SessionData>, boost::owner_less<websocketpp::connection_hdl> > SessionMap;
+ 
+ 	bool validate(websocketpp::connection_hdl hdl);
+ 	void on_open(websocketpp::connection_hdl hdl);

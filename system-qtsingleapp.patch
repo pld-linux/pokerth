@@ -1,0 +1,41 @@
+diff -Nur PokerTH-1.1.1-src/pokerth_game.pro PokerTH-1.1.1-src-fedora/pokerth_game.pro
+--- PokerTH-1.1.1-src/pokerth_game.pro	2014-01-10 21:18:20.743643000 +0000
++++ PokerTH-1.1.1-src-fedora/pokerth_game.pro	2014-06-14 05:15:10.996114724 +0000
+@@ -10,13 +10,13 @@
+ TEMPLATE = app
+ CODECFORSRC = UTF-8
+ CONFIG += qt \
++	qtsingleapplication \
+ 	thread \
+ 	embed_manifest_exe \
+ 	exceptions \
+ 	rtti \
+ 	stl \
+ 	warn_on
+-include(src/third_party/qtsingleapplication/qtsingleapplication.pri)
+ QT += sql
+ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+ UI_DIR = uics
+diff -Nur PokerTH-1.1.1-src/src/pokerth.cpp PokerTH-1.1.1-src-fedora/src/pokerth.cpp
+--- PokerTH-1.1.1-src/src/pokerth.cpp	2014-01-10 21:18:20.926643000 +0000
++++ PokerTH-1.1.1-src-fedora/src/pokerth.cpp	2014-06-14 06:24:45.446516672 +0000
+@@ -55,7 +55,7 @@
+ #include "startsplash.h"
+ #include "game_defs.h"
+ #include <net/socket_startup.h>
+-#include <third_party/qtsingleapplication/qtsingleapplication.h>
++#include <QtSingleApplication>
+ 
+ #ifdef _MSC_VER
+ #ifdef _DEBUG
+@@ -103,8 +103,8 @@
+ 	QApplication a(argc, argv);
+ 	a.setApplicationName("PokerTH");
+ #else
+-	SharedTools::QtSingleApplication a( "PokerTH", argc, argv );
+-	if (a.sendMessage("Wake up!")) {
++	QtSingleApplication a( "PokerTH", argc, argv );
++	if (a.sendMessage(QString("Wake up!"))) {
+ 		return 0;
+ 	}
+ #endif

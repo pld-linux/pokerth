@@ -1,0 +1,75 @@
+diff -ur PokerTH-1.1.1-src/src/gui/qt/chattools/chattools.h PokerTH-1.1.1-src-moc/src/gui/qt/chattools/chattools.h
+--- PokerTH-1.1.1-src/src/gui/qt/chattools/chattools.h	2014-01-10 22:18:20.782643125 +0100
++++ PokerTH-1.1.1-src-moc/src/gui/qt/chattools/chattools.h	2017-04-13 00:39:07.356116710 +0200
+@@ -37,7 +37,9 @@
+ #include <QtWidgets>
+ #endif
+ #include <QtGui>
++#ifndef Q_MOC_RUN
+ #include <boost/shared_ptr.hpp>
++#endif
+ 
+ enum ChatType { INET_LOBBY_CHAT, LAN_LOBBY_CHAT, INGAME_CHAT };
+ 
+diff -ur PokerTH-1.1.1-src/src/gui/qt/gametable/gametableimpl.h PokerTH-1.1.1-src-moc/src/gui/qt/gametable/gametableimpl.h
+--- PokerTH-1.1.1-src/src/gui/qt/gametable/gametableimpl.h	2014-01-10 22:18:20.788643125 +0100
++++ PokerTH-1.1.1-src-moc/src/gui/qt/gametable/gametableimpl.h	2017-04-13 00:45:09.443702802 +0200
+@@ -31,6 +31,7 @@
+ #ifndef GAMETABLEIMPL_H
+ #define GAMETABLEIMPL_H
+ 
++#ifndef Q_MOC_RUN
+ #ifdef GUI_800x480
+ #include "ui_gametable_800x480.h"
+ #include "ui_tabs_800x480.h"
+@@ -38,6 +39,7 @@
+ #include "ui_gametable.h"
+ #endif
+ #include "game_defs.h"
++#endif
+ 
+ #include <string>
+ 
+diff -ur PokerTH-1.1.1-src/src/gui/qt/logfiledialog/logfiledialog.h PokerTH-1.1.1-src-moc/src/gui/qt/logfiledialog/logfiledialog.h
+--- PokerTH-1.1.1-src/src/gui/qt/logfiledialog/logfiledialog.h	2014-01-10 22:18:20.853643118 +0100
++++ PokerTH-1.1.1-src-moc/src/gui/qt/logfiledialog/logfiledialog.h	2017-04-13 00:52:54.025749930 +0200
+@@ -35,7 +35,9 @@
+ #include <QDialog>
+ #include <QFile>
+ #include <net/uploadcallback.h>
++#ifndef Q_MOC_RUN
+ #include <boost/shared_ptr.hpp>
++#endif
+ 
+ class UploaderThread;
+ 
+diff -ur PokerTH-1.1.1-src/src/gui/qt/settingsdialog/settingsdialogimpl.h PokerTH-1.1.1-src-moc/src/gui/qt/settingsdialog/settingsdialogimpl.h
+--- PokerTH-1.1.1-src/src/gui/qt/settingsdialog/settingsdialogimpl.h	2014-01-10 22:18:20.909643111 +0100
++++ PokerTH-1.1.1-src-moc/src/gui/qt/settingsdialog/settingsdialogimpl.h	2017-04-13 00:48:14.432361758 +0200
+@@ -45,7 +45,9 @@
+ #include <QtWidgets>
+ #endif
+ 
++#ifndef Q_MOC_RUN
+ #include <boost/shared_ptr.hpp>
++#endif
+ #include <vector>
+ #include <iostream>
+ 
+diff -ur PokerTH-1.1.1-src/src/gui/qt/sound/sdlplayer.h PokerTH-1.1.1-src-moc/src/gui/qt/sound/sdlplayer.h
+--- PokerTH-1.1.1-src/src/gui/qt/sound/sdlplayer.h	2014-01-10 22:18:20.910643111 +0100
++++ PokerTH-1.1.1-src-moc/src/gui/qt/sound/sdlplayer.h	2017-04-13 00:52:12.038603251 +0200
+@@ -36,11 +36,13 @@
+ #include "configfile.h"
+ #include <string>
+ 
++#ifndef Q_MOC_RUN
+ #ifdef __APPLE__
+ #include <SDL_mixer.h>
+ #else
+ #include <SDL/SDL_mixer.h>
+ #endif
++#endif
+ 
+ /**
+ 	@author FThauer FHammer <webmaster@pokerth.net>
