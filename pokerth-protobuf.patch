@@ -1,0 +1,24 @@
+"reserved" is protoc keyword now.
+
+--- PokerTH-1.1.1-src/pokerth.proto.orig	2014-01-10 22:18:20.743643130 +0100
++++ PokerTH-1.1.1-src/pokerth.proto	2017-12-12 20:56:47.300267594 +0100
+@@ -701,7 +701,7 @@
+ 
+ message ErrorMessage {
+ 	enum ErrorReason {
+-		reserved = 0;
++		reserved_ = 0;
+ 		initVersionNotSupported = 1;
+ 		initServerFull = 2;
+ 		initAuthFailure = 3;
+--- PokerTH-1.1.1-src/src/net/common/netpacket.cpp.orig	2014-01-10 22:18:20.917643110 +0100
++++ PokerTH-1.1.1-src/src/net/common/netpacket.cpp	2017-12-12 21:02:41.138399391 +0100
+@@ -249,7 +249,7 @@
+ 		retVal = ErrorMessage::sessionTimeout;
+ 		break;
+ 	default :
+-		retVal = ErrorMessage::reserved;
++		retVal = ErrorMessage::reserved_;
+ 		break;
+ 	}
+ 	return retVal;
