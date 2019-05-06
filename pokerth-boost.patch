@@ -1,0 +1,24 @@
+--- pokerth-1.1.2-rc/src/net/common/clientthread.cpp.orig	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/src/net/common/clientthread.cpp	2019-05-06 20:01:16.461183436 +0200
+@@ -993,8 +993,7 @@
+ 			newSock.reset(new boost::asio::ip::tcp::socket(*m_ioService, tcp::v6()));
+ 		else
+ 			newSock.reset(new boost::asio::ip::tcp::socket(*m_ioService, tcp::v4()));
+-		boost::asio::socket_base::non_blocking_io command(true);
+-		newSock->io_control(command);
++		newSock->non_blocking(true);
+ 		newSock->set_option(tcp::no_delay(true));
+ 		newSock->set_option(boost::asio::socket_base::keep_alive(true));
+ 
+--- pokerth-1.1.2-rc/src/net/serveraccepthelper.h.orig	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/src/net/serveraccepthelper.h	2019-05-06 20:28:04.582779720 +0200
+@@ -122,8 +122,7 @@
+ 					  const boost::system::error_code &error)
+ 	{
+ 		if (!error) {
+-			boost::asio::socket_base::non_blocking_io command(true);
+-			acceptedSocket->io_control(command);
++			acceptedSocket->non_blocking(true);
+ 			acceptedSocket->set_option(typename P::no_delay(true));
+ 			acceptedSocket->set_option(boost::asio::socket_base::keep_alive(true));
+ 			boost::shared_ptr<SessionData> sessionData(new SessionData(acceptedSocket, m_lobbyThread->GetNextSessionId(), m_lobbyThread->GetSessionDataCallback(), *m_ioService));

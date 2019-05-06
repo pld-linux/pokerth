@@ -1,36 +1,38 @@
 Summary:	The Open Source Texas-Holdem Poker Engine
 Summary(pl.UTF-8):	Silnik gry Texas-Holdem poker
 Name:		pokerth
-Version:	1.1.1
-Release:	6
-License:	GPL v2+
+Version:	1.1.2
+Release:	1
+License:	AGPL v3+
 Group:		X11/Applications/Games
-Source0:	http://downloads.sourceforge.net/pokerth/PokerTH-%{version}-src.tar.bz2
-# Source0-md5:	a7f76f95782099f966e5f2b6809f502a
+Source0:	http://downloads.sourceforge.net/pokerth/pokerth-%{version}.tar.gz
+# Source0-md5:	8fd7d7fc7ece17315e58aa3240dd4586
 Patch0:		x32.patch
-Patch1:		boost-1.60.patch
-Patch2:		ownerless.patch
-Patch3:		cxx11-build.patch
-Patch4:		cxx11-fixes.patch
-Patch5:		system-qtsingleapp.patch
-Patch6:		moc.patch
-Patch7:		%{name}-protobuf.patch
+Patch1:		system-qtsingleapp.patch
+Patch2:		moc.patch
+Patch3:		%{name}-protobuf.patch
+Patch4:		%{name}-boost.patch
+# from https://github.com/zaphoyd/websocketpp/pull/814/commits/c769c9238ad62178f506038178714a1c35aa2769.patch
+Patch5:		%{name}-websocketpp-boost.patch
 URL:		http://www.pokerth.net/
-BuildRequires:	QtCore-devel >= 4.3.1
-BuildRequires:	QtGui-devel >= 4.3.1
-BuildRequires:	QtNetwork-devel
+BuildRequires:	QtCore-devel >= 4.4.3
+BuildRequires:	QtGui-devel >= 4.4.3
+BuildRequires:	QtNetwork-devel >= 4.4.3
 BuildRequires:	QtSingleApplication-devel
-BuildRequires:	QtSql-devel
+BuildRequires:	QtSql-devel >= 4.4.3
+BuildRequires:	SDL-devel
 BuildRequires:	SDL_mixer-devel
-BuildRequires:	boost-devel >= 1.37.0-3
+BuildRequires:	boost-devel >= 1.49
 BuildRequires:	curl-devel >= 7.16
 BuildRequires:	gnutls-devel
-BuildRequires:	gsasl-devel
-BuildRequires:	libircclient-devel
-BuildRequires:	protobuf-devel
+BuildRequires:	gsasl-devel >= 1.4
+BuildRequires:	libircclient-devel >= 1.3
+BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	protobuf-devel >= 2.3.0
 BuildRequires:	qt4-build >= 4.3.1
 BuildRequires:	qt4-qmake >= 4.3.1
 BuildRequires:	sed >= 4.0
+BuildRequires:	sqlite3-devel >= 3
 BuildRequires:	tinyxml-devel
 BuildRequires:	zlib-devel >= 1.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -48,32 +50,44 @@ komputerowym przeciwnikom lub sieciową grę z innymi zawodnikami.
 Silnik gry dostępny jest na platformy Linux, Windows oraz MacOS X.
 
 %prep
-%setup -q -n PokerTH-%{version}-src
+%setup -q -n pokerth-%{version}-rc
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+cd src/third_party/websocketpp
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
+cd ../../..
 
 %{__rm} -r src/third_party/qtsingleapplication
 
 %build
-qmake-qt4 pokerth.pro \
+install -d build-client build-server
+cd build-server
+qmake-qt4 ../pokerth.pro \
 	QMAKE_CXX="%{__cxx}" \
-	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}"
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}" \
+	QMAKE_LFLAGS_RELEASE="%{rpmldflags}"
+%{__make}
+
+cd ../build-client
+qmake-qt4 ../pokerth.pro \
+	CONFIG+=client \
+	QMAKE_CXX="%{__cxx}" \
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}" \
 	QMAKE_LFLAGS_RELEASE="%{rpmldflags}"
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
-%{__make} install \
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
+
+%{__make} -C build-client install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
-install pokerth bin/pokerth_server $RPM_BUILD_ROOT%{_bindir}
+install build-client/pokerth build-server/bin/pokerth_server $RPM_BUILD_ROOT%{_bindir}
+cp -p docs/pokerth.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -81,7 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYING ChangeLog TODO
-%attr(755,root,root) %{_bindir}/pokerth*
-%{_desktopdir}/%{name}.desktop
-%{_pixmapsdir}/%{name}.png
-%{_datadir}/%{name}
+%attr(755,root,root) %{_bindir}/pokerth
+%attr(755,root,root) %{_bindir}/pokerth_server
+%{_desktopdir}/pokerth.desktop
+%{_pixmapsdir}/pokerth.png
+%{_datadir}/pokerth
+%{_mandir}/man1/pokerth.1*

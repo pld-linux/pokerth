@@ -1,13 +1,19 @@
---- PokerTH-1.1-src/pokerth_game.pro~	2013-12-22 17:58:01.000000000 +0100
-+++ PokerTH-1.1-src/pokerth_game.pro	2015-06-27 10:48:03.818795259 +0200
-@@ -408,6 +408,7 @@
- 		LIBPATH += $${PREFIX}/lib /opt/gsasl/lib
- 		LIB_DIRS = $${PREFIX}/lib \
- 			$${PREFIX}/lib64 \
-+			$${PREFIX}/libx32 \
- 			$$system(qmake -query QT_INSTALL_LIBS)
+--- pokerth-1.1.2-rc/pokerth_game.pro.orig	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/pokerth_game.pro	2019-05-06 18:44:47.675780451 +0200
+@@ -408,11 +408,8 @@
+ 	INCLUDEPATH += $${PREFIX}/include
+ 	QMAKE_LIBDIR += lib
+ 	!android{
+-		LIBPATH += $${PREFIX}/lib /opt/gsasl/lib
+-		LIB_DIRS = $${PREFIX}/lib \
+-			$${PREFIX}/lib64 \
+-                        $${PREFIX}/lib/x86_64-linux-gnu \
+-			$$system(qmake -query QT_INSTALL_LIBS)
++		LIBPATH += $$system(qmake-qt4 -query QT_INSTALL_LIBS)
++		LIB_DIRS = $$system(qmake-qt4 -query QT_INSTALL_LIBS)
  	}
  	android{
+ 		LIBPATH += $${PREFIX}/lib/armv7
 --- PokerTH-1.1-src/connectivity.pro~	2013-12-22 17:58:01.000000000 +0100
 +++ PokerTH-1.1-src/connectivity.pro	2015-06-27 10:48:51.073035818 +0200
 @@ -41,7 +41,7 @@
@@ -15,7 +21,7 @@
  	QMAKE_LIBDIR += lib $${PREFIX}/lib /opt/gsasl/lib
  	INCLUDEPATH += $${PREFIX}/include
 -	LIB_DIRS = $${PREFIX}/lib $${PREFIX}/lib64 $$system(qmake -query QT_INSTALL_LIBS)
-+	LIB_DIRS = $${PREFIX}/lib $${PREFIX}/lib64 $${PREFIX}/libx32 $$system(qmake -query QT_INSTALL_LIBS)
++	LIB_DIRS = $$system(qmake-qt4 -query QT_INSTALL_LIBS)
  	BOOST_PROGRAM_OPTIONS = boost_program_options boost_program_options-mt
  	BOOST_SYS = boost_system boost_system-mt
  
@@ -26,18 +32,18 @@
  	QMAKE_LIBDIR += lib $${PREFIX}/lib /opt/gsasl/lib
  	INCLUDEPATH += $${PREFIX}/include
 -	LIB_DIRS = $${PREFIX}/lib $${PREFIX}/lib64 $$system(qmake -query QT_INSTALL_LIBS)
-+	LIB_DIRS = $${PREFIX}/lib $${PREFIX}/lib64 $${PREFIX}/libx32 $$system(qmake -query QT_INSTALL_LIBS)
++	LIB_DIRS = $$system(qmake-qt4 -query QT_INSTALL_LIBS)
  	BOOST_THREAD = boost_thread boost_thread-mt
  	BOOST_PROGRAM_OPTIONS = boost_program_options boost_program_options-mt
  	BOOST_SYS = boost_system boost_system-mt
---- PokerTH-1.1-src/pokerth_server.pro~	2013-12-22 17:58:01.000000000 +0100
-+++ PokerTH-1.1-src/pokerth_server.pro	2015-06-27 10:49:32.887174260 +0200
-@@ -175,7 +175,7 @@
- 
- 	LIBPATH += lib $${PREFIX}/lib /opt/gsasl/lib
+--- pokerth-1.1.2-rc/pokerth_server.pro.orig	2019-05-06 18:45:52.762554321 +0200
++++ pokerth-1.1.2-rc/pokerth_server.pro	2019-05-06 18:47:54.545658538 +0200
+@@ -180,7 +180,7 @@
  	INCLUDEPATH += $${PREFIX}/include
+ 	# see issue https://github.com/pokerth/pokerth/issues/282
+ 	INCLUDEPATH += $${PREFIX}/include/libircclient
 -	LIB_DIRS = $${PREFIX}/lib $${PREFIX}/lib64 $$system(qmake -query QT_INSTALL_LIBS)
-+	LIB_DIRS = $${PREFIX}/lib $${PREFIX}/lib64 $${PREFIX}/libx32 $$system(qmake -query QT_INSTALL_LIBS)
++	LIB_DIRS = $$system(qmake-qt4 -query QT_INSTALL_LIBS)
  	BOOST_FS = boost_filesystem boost_filesystem-mt
  	BOOST_THREAD = boost_thread boost_thread-mt
  	BOOST_PROGRAM_OPTIONS = boost_program_options boost_program_options-mt
