@@ -2,7 +2,7 @@ Summary:	The Open Source Texas-Holdem Poker Engine
 Summary(pl.UTF-8):	Silnik gry Texas-Holdem poker
 Name:		pokerth
 Version:	1.1.2
-Release:	4
+Release:	5
 License:	AGPL v3+
 Group:		X11/Applications/Games
 Source0:	http://downloads.sourceforge.net/pokerth/pokerth-%{version}.tar.gz
