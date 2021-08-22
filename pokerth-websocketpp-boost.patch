@@ -13,11 +13,10 @@ while keeping it backwards compatible to older boost versions.
  websocketpp/transport/asio/security/tls.hpp  | 3 +--
  4 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/websocketpp/transport/asio/connection.hpp b/websocketpp/transport/asio/connection.hpp
-index 60f88a79..1ccda8f3 100644
---- a/websocketpp/transport/asio/connection.hpp
-+++ b/websocketpp/transport/asio/connection.hpp
-@@ -311,9 +311,10 @@ class connection : public config::socket_type::socket_con_type {
+diff -urNp -x '*.orig' pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/connection.hpp pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/connection.hpp
+--- pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/connection.hpp	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/connection.hpp	2021-08-22 09:36:02.780556636 +0200
+@@ -311,9 +311,10 @@ public:
       * needed.
       */
      timer_ptr set_timer(long duration, timer_handler callback) {
@@ -31,11 +30,10 @@ index 60f88a79..1ccda8f3 100644
          );
  
          if (config::enable_multithreading) {
-diff --git a/websocketpp/transport/asio/endpoint.hpp b/websocketpp/transport/asio/endpoint.hpp
-index ddab2c74..4b719a97 100644
---- a/websocketpp/transport/asio/endpoint.hpp
-+++ b/websocketpp/transport/asio/endpoint.hpp
-@@ -195,8 +195,7 @@ class endpoint : public config::socket_type {
+diff -urNp -x '*.orig' pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/endpoint.hpp pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/endpoint.hpp
+--- pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/endpoint.hpp	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/endpoint.hpp	2021-08-22 09:36:02.780556636 +0200
+@@ -191,8 +191,7 @@ public:
  
          m_io_service = ptr;
          m_external_io_service = true;
@@ -45,11 +43,10 @@ index ddab2c74..4b719a97 100644
  
          m_state = READY;
          ec = lib::error_code();
-diff --git a/websocketpp/transport/asio/security/none.hpp b/websocketpp/transport/asio/security/none.hpp
-index 5c8293db..6c7d3524 100644
---- a/websocketpp/transport/asio/security/none.hpp
-+++ b/websocketpp/transport/asio/security/none.hpp
-@@ -168,8 +168,7 @@ class connection : public lib::enable_shared_from_this<connection> {
+diff -urNp -x '*.orig' pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/security/none.hpp pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/security/none.hpp
+--- pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/security/none.hpp	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/security/none.hpp	2021-08-22 09:36:02.780556636 +0200
+@@ -168,8 +168,7 @@ protected:
              return socket::make_error_code(socket::error::invalid_state);
          }
  
@@ -57,13 +54,12 @@ index 5c8293db..6c7d3524 100644
 -            lib::ref(*service));
 +        m_socket.reset(new lib::asio::ip::tcp::socket(*service));
  
-         if (m_socket_init_handler) {
-             m_socket_init_handler(m_hdl, *m_socket);
-diff --git a/websocketpp/transport/asio/security/tls.hpp b/websocketpp/transport/asio/security/tls.hpp
-index c76fd9aa..04ac3790 100644
---- a/websocketpp/transport/asio/security/tls.hpp
-+++ b/websocketpp/transport/asio/security/tls.hpp
-@@ -193,8 +193,7 @@ class connection : public lib::enable_shared_from_this<connection> {
+         m_state = READY;
+ 
+diff -urNp -x '*.orig' pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/security/tls.hpp pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/security/tls.hpp
+--- pokerth-1.1.2-rc.org/src/third_party/websocketpp/websocketpp/transport/asio/security/tls.hpp	2017-08-16 14:24:03.000000000 +0200
++++ pokerth-1.1.2-rc/src/third_party/websocketpp/websocketpp/transport/asio/security/tls.hpp	2021-08-22 09:36:02.780556636 +0200
+@@ -193,8 +193,7 @@ protected:
          if (!m_context) {
              return socket::make_error_code(socket::error::invalid_tls_context);
          }
@@ -71,5 +67,5 @@ index c76fd9aa..04ac3790 100644
 -            _WEBSOCKETPP_REF(*service),lib::ref(*m_context));
 +        m_socket.reset(new socket_type(*service, *m_context));
  
-         if (m_socket_init_handler) {
-             m_socket_init_handler(m_hdl, get_socket());
+         m_io_service = service;
+         m_strand = strand;
