@@ -1,0 +1,21 @@
+--- pokerth-1.1.2-rc/pokerth_lib.pro~	2024-12-24 10:43:11.653333270 +0100
++++ pokerth-1.1.2-rc/pokerth_lib.pro	2024-12-24 10:43:11.509999936 +0100
+@@ -7,7 +7,7 @@
+ TEMPLATE = lib
+ CODECFORSRC = UTF-8
+ 
+-CONFIG += staticlib thread exceptions rtti stl warn_on
++CONFIG += websocketpp staticlib thread exceptions rtti stl warn_on
+ UI_DIR = uics
+ TARGET = lib/pokerth_lib
+ QMAKE_CLEAN += ./lib/libpokerth_lib.a
+@@ -30,8 +30,7 @@
+ 		src/engine/local_engine \
+ 		src/engine/network_engine \
+ 		src/config \
+-		src/core \
+-		src/third_party/websocketpp
++		src/core
+ 
+ DEPENDPATH += . \
+ 		src \

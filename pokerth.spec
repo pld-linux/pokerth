@@ -16,6 +16,8 @@ Patch3:		%{name}-protobuf.patch
 Patch4:		%{name}-boost.patch
 # from https://github.com/zaphoyd/websocketpp/pull/814/commits/c769c9238ad62178f506038178714a1c35aa2769.patch
 Patch5:		%{name}-websocketpp-boost.patch
+Patch6:		boost-1.85.patch
+Patch7:		system-websocketpp.patch
 URL:		https://pokerth.net/
 BuildRequires:	QtCore-devel >= 4.4.3
 BuildRequires:	QtGui-devel >= 4.4.3
@@ -36,6 +38,7 @@ BuildRequires:	qt4-qmake >= 4.3.1
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3
 BuildRequires:	tinyxml-devel
+BuildRequires:	websocketpp-devel
 BuildRequires:	zlib-devel >= 1.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -59,6 +62,8 @@ Silnik gry dostępny jest na platformy Linux, Windows oraz MacOS X.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %{__rm} -r src/third_party/qtsingleapplication
 
